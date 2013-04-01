@@ -1,0 +1,96 @@
+body {
+	margin: 0;
+	padding: 0;
+	color: #000;
+	background: #F6F6F6;
+}
+
+#header {
+	background:#59554E;
+	padding: 5px;
+	width: 100%;
+	overflow: hidden;
+}
+
+#header_text {
+	color: #F6F6F6;
+	width: 30%;
+	float: left;
+}
+
+#main_menu {
+	float: right;
+	padding: 50px 0 0 0;
+	width: 40%;
+}
+
+#container {
+	width: 1024px;
+	padding: 5px;
+	overflow: hidden;
+	margin:0 auto;
+}
+
+#sidebar {
+	float: left;
+	background:#E8E8E8;
+	width: 24%;
+	padding: 10px 5px;
+	min-height: 450px;
+}
+
+#main {
+	float: right;
+	background: #F6F6F6;
+	width: 74%;
+	padding: 5px;
+	overflow: hidden;
+}
+
+#footer {
+	clear: both;
+	padding: 10px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+#footer p {
+	margin: 0px;
+	text-align: center;
+	font-size: 12px;
+}
+
+#menu {
+	list-style: none;
+	font-family: "Century Gothic", Verdana, Arial, Sans-Serif;
+	width: 400px;
+	float: left;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+}
+
+#menu.li
+{
+	height: 2em;
+	float: left;
+	clear: both;
+}
+
+#menu li a
+{
+	float: left;
+	display: block;
+	padding: 4px;
+	text-decoration: none;
+	color: #F6F6F6;
+	text-transform: uppercase;
+	margin-bottom: 5px;
+	margin-right: 10px;
+}
+
+#menu li:hover a,
+#menu li a:hover
+{
+	color: #999;
+}
