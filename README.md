@@ -7,7 +7,7 @@ and table summaries.
 
 2013 Spring Project for MIST 7530
 
-Wesley Davis
-Brian Lord
-Rafael Machado
+Davis Buckheister
+Brian Lord 
+Rafael Machado 
 Rodney Pacis
