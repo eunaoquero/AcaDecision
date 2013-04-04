@@ -31,7 +31,7 @@
 			<input type="submit" value="Login"></p>
 		</form>
 	</div>
-	<div id="main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+	<div id="main">Lorem ipsum dolor sit amet, ddfdf sconsectetur adipiscing elit. 
 	Duis egestas, dolor eu venenatis consectetur, eros urna pretium dui, eu 
 	varius massa lorem venenatis dui. Ut tristique hendrerit lacus, eu gravida arcu mollis non. 
 	Integer vehicula nisl eget arcu consequat at aliquet nulla rhoncus. 
