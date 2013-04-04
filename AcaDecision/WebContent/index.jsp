@@ -23,12 +23,12 @@
 	</div>
 	<div id="sidebar">
 		<form method="post" action="home.jsp">
-			<p>Please Enter your Name: </p>
+			<p>Username: </p>
 			<p><input type="text" name=""></p>
-			<p>Please Enter your Password:</p>
+			<p>Password:</p>
 			<p><input type="text" name=""></p>
 			<p> 
-			<input type="submit" value="Login!"></p>
+			<input type="submit" value="Login"></p>
 		</form>
 	</div>
 	<div id="main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -38,7 +38,7 @@
 	Etiam a libero porta libero feugiat pulvinar.</div>
 	<div id="footer">
 		<p>&copy; 2013 AcaDecision :: MIST 7530</p>
-		<p>Davis | Lord | Macahado | Pacis</p>
+		<p>Buckheister | Lord | Pacis | Silva</p>
 	</div>
 </div>
 

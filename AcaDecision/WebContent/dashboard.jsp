@@ -42,7 +42,7 @@
 		<img src="dash.jpg" width="98%"></div>
 		<div id="footer">
 			<p>&copy; 2013 AcaDecision :: MIST 7530</p>
-			<p>Davis | Lord | Macahado | Pacis</p>
+			<p>Buckheister | Lord | Pacis | Silva</p>
 		</div>
 </div>
 
