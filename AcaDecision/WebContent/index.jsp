@@ -31,11 +31,19 @@
 			<input type="submit" value="Login"></p>
 		</form>
 	</div>
-	<div id="main">Lorem ipsum dolor sit amet, ddfdf sconsectetur adipiscing elit. 
-	Duis egestas, dolor eu venenatis consectetur, eros urna pretium dui, eu 
-	varius massa lorem venenatis dui. Ut tristique hendrerit lacus, eu gravida arcu mollis non. 
-	Integer vehicula nisl eget arcu consequat at aliquet nulla rhoncus. 
-	Etiam a libero porta libero feugiat pulvinar.</div>
+	<div id="main">
+	<h2>About AcaDecision</h2>
+	<p>AcaDecision is a visualization tool created to help facilitate the decision making of college administrators and department heads. It allows for a quick and easy way to see the current status of a college using different graphs and table summaries.</p>
+	<p>2013 Spring Project for MIST 7570</p>
+	<p>
+	<ul>
+		<li>Davis Buckheister</li>
+		<li>Brian Lord</li>
+		<li>Rafael Silva</li>
+		<li>Rodney Pacis</li>
+	</ul>
+	</p>
+	</div>
 	<div id="footer">
 		<p>&copy; 2013 AcaDecision :: MIST 7530</p>
 		<p>Buckheister | Lord | Pacis | Silva</p>

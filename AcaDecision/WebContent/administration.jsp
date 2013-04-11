@@ -36,7 +36,7 @@
 				<OPTION VALUE="Manage Users">Manage Users
 				<OPTION VALUE="Manage Groups and Roles">Manage Groups and Roles
 			</SELECT>
-			<input type="submit" value="View Results"> 
+			<input type="submit" value="Go!"> 
 		</form>
 		<h2>Administration Panel</h2>
 		<table border="1" width="80%">
