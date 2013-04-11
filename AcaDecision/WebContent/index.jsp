@@ -17,7 +17,7 @@
 		<ul id="menu">
 			<li><a href="index.jsp">Home</a></li>
 			<li><a href="dashboard.jsp">Dashboards</a></li>
-			<li><a href="#">About</a></li>
+			<li><a href="administration.jsp">Admin</a></li>
 		</ul>
 		</div>
 	</div>

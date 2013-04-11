@@ -31,15 +31,33 @@
 	<div id="main">
 		<form method="post" action="dashboard.jsp">
 			<SELECT NAME="dashboardType">
-				<OPTION VALUE="">Choose the information Type
-				<OPTION VALUE="Student Enrollment Statistics">Student Enrollment Statistics
-				<OPTION VALUE="College Financials">College Financials
-				<OPTION VALUE="Total Research Expenditures" >Total Research Expenditures
+				<OPTION VALUE="">Select action
+				<OPTION VALUE="Add User">Add User
+				<OPTION VALUE="Manage Users">Manage Users
+				<OPTION VALUE="Manage Groups and Roles">Manage Groups and Roles
 			</SELECT>
 			<input type="submit" value="View Results"> 
 		</form>
-		<br/>
-		<img src="dash.jpg" width="98%"></div>
+		<h2>Administration Panel</h2>
+		<table border="1" width="80%">
+			<tr>
+				<td width="50%" bgcolor="#CACACA"><strong>Username</strong></td>
+				<td width="50%" bgcolor="#CACACA"><strong>Group</strong></td>
+			</tr>
+			<tr>
+				<td>admin</td>
+				<td>Administrator</td>
+			</tr>
+			<tr>
+				<td>jdoe</td>
+				<td>Super User</td>
+			</tr>
+			<tr>
+				<td>admin</td>
+				<td>User</td>
+			</tr>
+		</table>
+		</div>
 		<div id="footer">
 			<p>&copy; 2013 AcaDecision :: MIST 7530</p>
 			<p>Buckheister | Lord | Pacis | Silva</p>
