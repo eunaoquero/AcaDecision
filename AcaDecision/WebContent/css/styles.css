@@ -6,7 +6,7 @@ body {
 }
 
 #header {
-	background:#59554E;
+	background: #59554E;
 	padding: 5px;
 	width: 100%;
 	overflow: hidden;
@@ -28,12 +28,12 @@ body {
 	width: 1024px;
 	padding: 5px;
 	overflow: hidden;
-	margin:0 auto;
+	margin: 0 auto;
 }
 
 #sidebar {
 	float: left;
-	background:#E8E8E8;
+	background: #E8E8E8;
 	width: 24%;
 	padding: 10px 5px;
 	min-height: 450px;
@@ -70,15 +70,13 @@ body {
 	font-size: 16px;
 }
 
-#menu.li
-{
+#menu.li {
 	height: 2em;
 	float: left;
 	clear: both;
 }
 
-#menu li a
-{
+#menu li a {
 	float: left;
 	display: block;
 	padding: 4px;
@@ -89,8 +87,6 @@ body {
 	margin-right: 10px;
 }
 
-#menu li:hover a,
-#menu li a:hover
-{
+#menu li:hover a,#menu li a:hover {
 	color: #999;
 }

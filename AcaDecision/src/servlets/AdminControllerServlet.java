@@ -5,8 +5,14 @@ package servlets;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
- * This controller maps functions for all adminstrator level tasks.
+ * This controller maps functions for all administrator level tasks.
  * AdminController will dispatch requests to the DBHelper class when
  * users are added, edited or deleted and as well as any group or role changes done
  * by an administrator level user.
@@ -19,7 +25,7 @@ public class AdminControllerServlet extends HttpServlet{
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControllerServlet() {
+    public AdminControllerServlet() {
         super();
         // TODO Implement constructor for AdminController
     }
