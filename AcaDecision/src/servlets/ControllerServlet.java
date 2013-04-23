@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Controller will dispatch a request to the AdminController for
- * administrator functions such as logging in, managing users and managing roles.
  * Controller will dispatch a request to the WebService helper class to retrieve
  * data for a dashboard view.
  * @author blord
@@ -57,7 +55,7 @@ public class ControllerServlet extends HttpServlet {
 		URL url = new URL("http://service.irp.gatech.edu/api/engg/index.php?term_code=" + termCode + "&method=ALL");
 		jsonData = wb.getWebServiceData(url);
 		//Put the JSON data in an attribute
-		request.setAttribute("jsonData", jsonData);
+		request.setAttribute("enrollmentData", jsonData);
 		request.setAttribute("term", term);
 		dispatcher.forward(request, response);
 	}
