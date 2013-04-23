@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	/** 
 	 * Dashboard.jsp page displays the graphs for the Acadecision site.
 	 * @author rpacis
-	**/
+	 **/
 %>
-    <jsp:useBean class="helpers.WebServiceHelper" id="webServiceHelper"/>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean class="helpers.WebServiceHelper" id="webServiceHelper" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,91 +20,115 @@
 <c:choose>
 	<c:when test="${!empty enrollmentData }">
 		<script>
-		/**
-		 * Javascript function uses jQuery, Highcharts and Underscore.js libraries
-		 * to display the HTML5 charts. Data comes from the webServiceHelper.
-		 * jQuery (http://jquery.com/)
-		 * Highcharts (http://www.highcharts.com/)
-		 * Underscore (http://underscorejs.org/)
-		 */
-		var enrollmentChart;
-		$(function() {
-		    var colors = Highcharts.getOptions().colors;
-		    var jsonData =  ${enrollmentData };   
-		    var categories = _.pluck(jsonData, 'MAJOR_DESC'); 
-		    var data = [];
-		
-		for(var i = 0, jsonDataLength = jsonData.length ; i < jsonDataLength ; i++ )
-		    {
-		        var enrollment = jsonData[i];
-		        data.push({y: parseInt(enrollment.STUDENTS) , color: colors[ i % colors.length] });
-		    }
-		    
-		enrollmentChart = new Highcharts.Chart({
-		       chart: {
-		          renderTo: 'graph1',
-		          type: 'bar',
-		          backgroundColor:'rgba(255, 255, 255, 0.1)'
-		       },
-		       title: {
-		          text: '${term } Enrollment - College of Engineering'
-		       },
-				credits: {
-		           enabled: false
-		       },
-				tooltip: {
-		               formatter: function() {
-		                   return '<b>'+ this.x +'</b><br>Students Enrolled: '+this.y;
-		               }
-		           },
-		       xAxis: {
-		          categories: categories,
-		          labels: {
-		              style: {
-		                  fontSize: '10px',
-		                  fontFamily: 'Helvetica Neue,Helvetica,Arial,sans-serif',
-		                  color: 'black',
-		                  lineColor: 'transparent'
-		              }
-		          }
-		       },
-		       yAxis: {
-		          title: {
-		             text: 'Students Enrolled',
-		             style: {
-		                 fontSize: '10px',
-		                 fontFamily: 'Helvetica Neue,Helvetica,Arial,sans-serif',
-		                 color: 'black',
-		                 fontWeight: 'normal',
-		                 lineColor: 'transparent',
-		                 min: 0, 
-		                 max: 2700
-		             }
-		          }
-		       },
-		       legend: {
-		           enabled: false
-		       },
-		       tooltip:{
-		          enabled: false
-		       },
-		       series: [{
-		          name: 'Majors',
-		          data: data,
-		          dataLabels: {
-		              enabled: true,
-		           }      
-		         }
-		       ],
-		       exporting: {
-		           enabled: false
-		       }
-		    });
-		 });
+			/**
+			 * Javascript function uses jQuery, Highcharts and Underscore.js libraries
+			 * to display the HTML5 charts. Data comes from the webServiceHelper.
+			 * jQuery (http://jquery.com/)
+			 * Highcharts (http://www.highcharts.com/)
+			 * Underscore (http://underscorejs.org/)
+			 */
+
+			$(function() {
+				// set the theme
+				Highcharts
+						.setOptions({
+							chart : {
+								backgroundColor : 'rgba(255, 255, 255, 0.1)'
+							},
+							xAxis : {
+
+							},
+							yAxis : {
+
+							},
+							legend : {
+								enabled : false
+							},
+							credits : {
+								enabled : false
+							}
+						});
+
+				// default options
+				var options = {};
+				var colors = Highcharts.getOptions().colors;
+				var jsonData = ${enrollmentData};
+				var data = [];
+				var genderData = [];
+
+				//parse the JSON data for chart 1
+				var categories = _.pluck(jsonData, 'MAJOR_DESC');
+				for ( var i = 0, jsonDataLength = jsonData.length; i < jsonDataLength; i++) {
+					var enrollment = jsonData[i];
+					data.push({
+						y : parseInt(enrollment.STUDENTS),
+						color : colors[i % colors.length]
+					});
+				}
+
+				// create the charts
+				var chart1Options = {
+					chart : {
+						type : 'bar',
+						renderTo : 'graph1'
+					},
+				    title: {
+					          text: '${term } Enrollment - College of Engineering'
+					},
+					xAxis : {
+						categories : categories,
+					},
+					tooltip : {
+						formatter : function() {
+							return '<b>' + this.x
+									+ '</b><br>Students Enrolled: ' + this.y;
+						}
+					},
+					series : [ {
+						name : 'Majors',
+						data : data,
+						dataLabels : {
+							enabled : true,
+						}
+					} ]
+				};
+				
+				//parse the JSON data for chart 2
+				jsonData = ${enrollmentGenderData};
+				for ( var i = 0, jsonDataLength = jsonData.length; i < jsonDataLength; i++) {
+					var enrollment = jsonData[i];
+					genderData.push(
+							[ jsonData[i]['GENDER'], parseInt(jsonData[i]['STUDENTS']) ]
+					);
+				}
+
+				var chart2Options = {
+					chart : {
+						renderTo : 'graph2'
+					},
+				    title: {
+				          text: '${term } Enrollment by Gender - College of Engineering'
+					},
+
+					series : [ {
+						type: 'pie',
+						name : 'Students',
+						data : genderData,
+					} ]
+				};
+				
+				//display chart 1
+				chart1Options = jQuery.extend(true, {}, options, chart1Options);
+				var chart1 = new Highcharts.Chart(chart1Options);
+				
+				//display chart 2
+				chart2Options = jQuery.extend(true, {}, options, chart2Options);
+				var chart2 = new Highcharts.Chart(chart2Options);
+			});
 		</script>
 	</c:when>
 </c:choose>
-<title>AcaDecision :: Dashboards</title>
+<title>AcaDecision :: Dashboard</title>
 </head>
 <body>
 
@@ -135,9 +159,14 @@
 					<OPTION VALUE="2012%20Fall">Fall 2012
 					<OPTION VALUE="2011%20Fall">Fall 2011
 					<OPTION VALUE="2010%20Fall">Fall 2010
+					<OPTION VALUE="2009%20Fall">Fall 2009
+					<OPTION VALUE="2008%20Fall">Fall 2008
 				</SELECT> <input type="submit" value="View Data">
 			</form>
-			<div id="graph1" style="min-width: 400px; height: 550px; margin: 0 auto"></div>
+			<div id="graph1"
+				style="min-width: 400px; height: 550px; margin: 0 auto"></div>
+			<div id="graph2"
+				style="min-width: 400px; height: 550px; margin: 0 auto"></div>
 		</div>
 		<div id="footer">
 			<p>&copy; 2013 AcaDecision :: MIST 7530</p>
