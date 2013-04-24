@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Contains information about a User Group
- * @author rsilva
+ * @author blord
  *
  */
 public class UserGroup {

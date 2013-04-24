@@ -5,7 +5,7 @@ package admin;
 
 /**
  * Contains information about a user profile
- * @author rsilva
+ * @author dbuckheister
  *
  */
 public class User {
