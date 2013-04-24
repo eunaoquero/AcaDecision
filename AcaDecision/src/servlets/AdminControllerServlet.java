@@ -24,7 +24,7 @@ import admin.User;
  * AdminController will dispatch requests to the DBHelper class when
  * users are added, edited or deleted and as well as any group or role changes done
  * by an administrator level user.
- * @author rppacis
+ * @author rpacis
  */
 @WebServlet("/Admin")
 public class AdminControllerServlet extends HttpServlet{
@@ -74,8 +74,8 @@ public class AdminControllerServlet extends HttpServlet{
 			User user = new User();
 			user = dbHelper.authenticateUser(userName, password);
 			
-			//if username is not equals to "User not found", it means user was authenticated and we put that in a session variable
-			//otherwise the userNotFound attribute is enabled
+			//if username is not equals to "User not found", it means user was authenticated and we put user details
+			//in a session variable, otherwise the userNotFound attribute is enabled
 			if (user.getEmail() != "User not found") {
 				System.out.println("User authenticated!\n");
 				session.setAttribute("userName", user.getEmail());

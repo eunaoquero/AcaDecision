@@ -195,9 +195,9 @@ public class DBHelper {
 		}
 		
 		/**
-		 * Returns a user with a userName assigned to email if authentication is successful
+		 * Returns a user with details assigned if authentication is successful
 		 * @param userName the username, userPassword the password
-		 * @return user and AuctionUser object
+		 * @return User object
 		 */
 		public User authenticateUser(String userName, String userPassword){
 			User user = new User();
@@ -207,7 +207,7 @@ public class DBHelper {
 				getAuthenticatedUserStatement.setString(2, userPassword);
 				rs = getAuthenticatedUserStatement.executeQuery();
 
-				//if Resultset rs is not empty, it means password matches a record
+				//if rs not empty, it means password matches a record
 				if (rs.next()) {
 					user.setEmail(rs.getString("email"));
 					user.setFirstName(rs.getString("lastName"));
