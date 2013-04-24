@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Test methods for the GroupRole class
  * Tests methods for contructing a GroupRole object
- * @author rppacis
+ * @author rpacis
  *
  */
 public class GroupRoleTest {

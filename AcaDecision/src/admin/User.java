@@ -37,6 +37,10 @@ public class User {
 		this.groupID = groupID;
 	}
 
+	//No parameter constructor
+	public User() {
+		
+	}
 
 	public int getUserID() {
 		return userID;

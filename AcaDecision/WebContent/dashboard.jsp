@@ -8,7 +8,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:useBean class="helpers.WebServiceHelper" id="webServiceHelper" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -131,7 +130,6 @@
 <title>AcaDecision :: Dashboard</title>
 </head>
 <body>
-
 	<div id="container">
 		<div id="header">
 			<div id="header_text">
@@ -147,26 +145,31 @@
 			</div>
 		</div>
 		<div id="sidebar">
-			<p>
-				Welcome! <strong>Vincent Van Gogh</strong>, <em>logout?</em>
-			</p>
-			<p>College News:</p>
+			<%@ include file="sidebar.jsp" %>
 		</div>
 		<div id="main">
-			<form method="post" action="Controller">
-				<SELECT NAME="term_code">
-					<OPTION VALUE="">Choose Term
-					<OPTION VALUE="2012%20Fall">Fall 2012
-					<OPTION VALUE="2011%20Fall">Fall 2011
-					<OPTION VALUE="2010%20Fall">Fall 2010
-					<OPTION VALUE="2009%20Fall">Fall 2009
-					<OPTION VALUE="2008%20Fall">Fall 2008
-				</SELECT> <input type="submit" value="View Data">
-			</form>
-			<div id="graph1"
-				style="min-width: 400px; height: 550px; margin: 0 auto"></div>
-			<div id="graph2"
-				style="min-width: 400px; height: 550px; margin: 0 auto"></div>
+			<%-- Check if user is logged in --%>
+			<c:choose>
+				<c:when test="${!empty sessionScope.userName}">
+				<form method="post" action="Controller">
+					<SELECT NAME="term_code">
+						<OPTION VALUE="">Choose Term
+						<OPTION VALUE="2012%20Fall">Fall 2012
+						<OPTION VALUE="2011%20Fall">Fall 2011
+						<OPTION VALUE="2010%20Fall">Fall 2010
+						<OPTION VALUE="2009%20Fall">Fall 2009
+						<OPTION VALUE="2008%20Fall">Fall 2008
+					</SELECT> <input type="submit" value="View Data">
+				</form>
+				<div id="graph1"
+					style="min-width: 400px; height: 550px; margin: 0 auto"></div>
+				<div id="graph2"
+					style="min-width: 400px; height: 550px; margin: 0 auto"></div>
+				</c:when>
+				<c:otherwise>
+					<p>Please login to view the dashboard page.</p>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div id="footer">
 			<p>&copy; 2013 AcaDecision :: MIST 7530</p>

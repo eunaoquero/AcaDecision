@@ -5,7 +5,7 @@ package data;
 
 /**
  * Manages the DisplayGraph objects
- * @author rsilva
+ * @author rpacis
  *
  */
 public class DisplayDashboard {

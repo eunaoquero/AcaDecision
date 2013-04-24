@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Test methods for the DisplayGraph class
- * @author rppacis
+ * @author rsilva
  *
  */
 public class DisplayGraphTest {

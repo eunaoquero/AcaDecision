@@ -8,7 +8,7 @@ import java.net.URL;
 /**
  * Contains data and information about a graph. Works with the
  * WebServiceHelper class.
- * @author rppacis
+ * @author rsilva
  *
  */
 public class DisplayGraph {

@@ -1,5 +1,13 @@
+<%
+	/** 
+	 * The administration page of the Auction site
+	 * @author rsilva
+	 **/
+%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,40 +32,30 @@
 			</div>
 		</div>
 		<div id="sidebar">
-			<p>
-				Welcome! <strong>Vincent Van Gogh</strong>, <em>logout?</em>
-			</p>
-			<p>College News:</p>
+			<%@ include file="sidebar.jsp" %>
 		</div>
 		<div id="main">
-			<form method="post" action="dashboard.jsp">
-				<SELECT NAME="dashboardType">
-					<OPTION VALUE="">Select action
-					<OPTION VALUE="Add User">Add User
-					<OPTION VALUE="Manage Users">Manage Users
-					<OPTION VALUE="Manage Groups and Roles">Manage Groups and
-						Roles
-				</SELECT> <input type="submit" value="Go!">
-			</form>
-			<h2>Administration Panel</h2>
-			<table border="1" width="80%">
-				<tr>
-					<td width="50%" bgcolor="#CACACA"><strong>Username</strong></td>
-					<td width="50%" bgcolor="#CACACA"><strong>Group</strong></td>
-				</tr>
-				<tr>
-					<td>admin</td>
-					<td>Administrator</td>
-				</tr>
-				<tr>
-					<td>jdoe</td>
-					<td>Super User</td>
-				</tr>
-				<tr>
-					<td>admin</td>
-					<td>User</td>
-				</tr>
-			</table>
+			<%-- Check if user is logged in --%>
+			<c:choose>
+				<c:when test="${!empty sessionScope.userName}">
+					<form method="post" action="dashboard.jsp">
+						<SELECT NAME="dashboardType">
+							<OPTION VALUE="">Select action
+							<OPTION VALUE="Add User">Add User
+							<OPTION VALUE="Manage Users">Manage Users
+							<OPTION VALUE="Manage Groups and Roles">Manage Groups and
+								Roles
+						</SELECT> <input type="submit" value="Go!">
+					</form>
+					<h2>Administration Panel</h2>
+					<table border="1" width="80%">
+						<tr>
+							<td width="50%" bgcolor="#CACACA"><strong>Username</strong></td>
+							<td width="50%" bgcolor="#CACACA"><strong>Group</strong></td>
+						</tr>
+					</table>
+				</c:when>
+			</c:choose>
 		</div>
 		<div id="footer">
 			<p>&copy; 2013 AcaDecision :: MIST 7530</p>

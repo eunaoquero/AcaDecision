@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Test methods for the DisplayDashboard class
- * @author rsilva
+ * @author rpacis
  *
  */
 public class DisplayDashboardTest {

@@ -1,5 +1,12 @@
+<%
+	/** 
+	 * Main index page
+	 * @author rpacis
+	 **/
+%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -25,19 +32,7 @@
 			</div>
 		</div>
 		<div id="sidebar">
-			<form method="post" action="home.jsp">
-				<p>Username:</p>
-				<p>
-					<input type="text" name="">
-				</p>
-				<p>Password:</p>
-				<p>
-					<input type="text" name="">
-				</p>
-				<p>
-					<input type="submit" value="Login">
-				</p>
-			</form>
+			<%@ include file="sidebar.jsp" %>
 		</div>
 		<div id="main">
 			<h2>About AcaDecision</h2>
