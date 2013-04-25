@@ -9,7 +9,6 @@ package admin;
  *
  */
 public class User {
-
 	
 	int userID;
 	String firstName; 
@@ -17,7 +16,7 @@ public class User {
 	String email;
 	String password;
 	int groupID;
-
+	String groupName;
 
 	/**
 	 * @param userID
@@ -39,12 +38,7 @@ public class User {
 
 	//No parameter constructor
 	public User() {
-		this.userID = -1;
-		this.firstName = "";
-		this.lastName = "";
-		this.email = "";
-		this.password = "";
-		this.groupID = -1;	
+
 	}
 
 	public int getUserID() {
@@ -105,6 +99,22 @@ public class User {
 	public void setGroupID(int groupID) {
 		this.groupID = groupID;
 	}
+
+	/**
+	 * @return the groupName
+	 */
+	public String getGroupName() {
+		return groupName;
+	}
+
+	/**
+	 * @param groupName the groupName to set
+	 */
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	
+	
 
 	
 	

@@ -148,6 +148,7 @@
 			<%@ include file="sidebar.jsp" %>
 		</div>
 		<div id="main">
+			<h2>Dashboard Page</h2>
 			<%-- Check if user is logged in --%>
 			<c:choose>
 				<c:when test="${!empty sessionScope.userName}">

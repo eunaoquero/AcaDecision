@@ -81,6 +81,7 @@ public class AdminControllerServlet extends HttpServlet{
 				session.setAttribute("userName", user.getEmail());
 				session.setAttribute("firstName", user.getFirstName());
 				session.setAttribute("lastName", user.getLastName());
+				session.setAttribute("groupID", user.getGroupID());
 			}
 			else {
 				System.out.println("User not found!\n");

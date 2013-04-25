@@ -35,26 +35,39 @@
 			<%@ include file="sidebar.jsp" %>
 		</div>
 		<div id="main">
+			<h2>Administration Panel</h2>
 			<%-- Check if user is logged in --%>
 			<c:choose>
 				<c:when test="${!empty sessionScope.userName}">
-					<form method="post" action="dashboard.jsp">
-						<SELECT NAME="dashboardType">
-							<OPTION VALUE="">Select action
-							<OPTION VALUE="Add User">Add User
-							<OPTION VALUE="Manage Users">Manage Users
-							<OPTION VALUE="Manage Groups and Roles">Manage Groups and
-								Roles
-						</SELECT> <input type="submit" value="Go!">
-					</form>
-					<h2>Administration Panel</h2>
-					<table border="1" width="80%">
-						<tr>
-							<td width="50%" bgcolor="#CACACA"><strong>Username</strong></td>
-							<td width="50%" bgcolor="#CACACA"><strong>Group</strong></td>
-						</tr>
-					</table>
+					<c:choose>
+						<c:when test="${sessionScope.groupID == 1}">
+							<jsp:useBean class="helpers.DBHelper" id="dbHelper"/>
+							<table border="1" width="80%" cellpadding="3" cellspacing="2">
+								<tr>
+									<td width="20%" bgcolor="#CACACA"><strong>Last Name</strong></td>
+									<td width="20%" bgcolor="#CACACA"><strong>First Name</strong></td>
+									<td width="40%" bgcolor="#CACACA"><strong>Username/Email</strong></td>
+									<td width="20%" bgcolor="#CACACA"><strong>Group</strong></td>
+								</tr>
+								<%-- Loop through the user list --%>
+								<c:forEach items="${dbHelper.userList }" var="user">
+									<tr>
+										<td>${user.lastName}</td>
+										<td>${user.firstName}</td>
+										<td>${user.email}</td>
+										<td>${user.groupName}</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</c:when>
+						<c:otherwise>
+							<p>You do not have the privileges to view this page.</p>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
+				<c:otherwise>
+					<p>Please log in as an administrator</p>
+				</c:otherwise>
 			</c:choose>
 		</div>
 		<div id="footer">
