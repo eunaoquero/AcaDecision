@@ -40,6 +40,8 @@
 				the decision making of college administrators and department heads.
 				It allows for a quick and easy way to see the current status of a
 				college using different graphs and table summaries.</p>
+			<p>Data for the charts in this application are retrieved via a web service
+			connected to an external operational data store.</p>
 			<p>2013 Spring Project for MIST 7570</p>
 			<ul>
 				<li>Davis Buckheister</li>
