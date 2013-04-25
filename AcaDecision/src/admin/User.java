@@ -39,7 +39,12 @@ public class User {
 
 	//No parameter constructor
 	public User() {
-		
+		this.userID = -1;
+		this.firstName = "";
+		this.lastName = "";
+		this.email = "";
+		this.password = "";
+		this.groupID = -1;	
 	}
 
 	public int getUserID() {

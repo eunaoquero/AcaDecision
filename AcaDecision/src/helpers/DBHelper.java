@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import admin.*;
@@ -19,10 +20,10 @@ import admin.*;
 public class DBHelper {
 
 	static String JDBC_URL = "jdbc:mysql://97.74.31.15/acadecision";
-	
-	PreparedStatement getAuthenticatedUserStatement;
+	PreparedStatement getAuthenticatedUserStatement; 
 	PreparedStatement getUserByEmailStatement;
 	PreparedStatement addUserStatement;
+	PreparedStatement delUserByIDStatement;
 	
 	PreparedStatement getGroupByNameStatement;
 	PreparedStatement addGroupStatement;
@@ -45,11 +46,10 @@ public class DBHelper {
 				Connection conn = DriverManager.getConnection(JDBC_URL, "acadecision", "D3c1d3@551");
 				System.out.println("Connected to Acadecision remote database");
 				
-				getAuthenticatedUserStatement = conn.prepareStatement("select * from acadecision.Users where email = (?) and password = (?) limit 0,1");
-				
-				getUserByEmailStatement = conn.prepareStatement("select * from acadecision.Users where email = ?"); // output: userID, firstName, lastName, email, password, groupID
-				
+				getAuthenticatedUserStatement = conn.prepareStatement("select * from acadecision.Users where email = (?) and password = (?) limit 0,1"); 
+				getUserByEmailStatement = conn.prepareStatement("select * from acadecision.Users where email = ?"); // output: userID, firstName, lastName, email, password, groupID				
 				addUserStatement = conn.prepareStatement("insert into acadecision.Users (firstName, lastName, email, password, Groups_groupID) values (?,?,?,?,?)");
+				delUserByIDStatement = conn.prepareStatement("delete from acadecision.Users where userID = ?");
 				
 				getGroupByNameStatement = conn.prepareStatement("select * from acadecision.Groups where groupName = ?"); // output: groupID, groupName, groupDescription
 				addGroupStatement = conn.prepareStatement("insert into acadecision.Groups (groupName, groupDescription) values (?,?)");
@@ -67,6 +67,35 @@ public class DBHelper {
 			    	e.printStackTrace();
 			    }
 			
+		}
+		
+
+//				addUserStatement = conn.prepareStatement("insert into Users (firstName, lastName, email, password, Groups_groupID) values (?,?,?,?,?)");		
+		public boolean addUser( String firstName, String lastName, String email, String password, int groupID){
+
+			boolean success = false;
+			try{
+				
+				addUserStatement.setString(1, firstName);
+				addUserStatement.setString(2, lastName);
+				addUserStatement.setString(3, email);
+				addUserStatement.setString(4, password);
+				addUserStatement.setInt(5, groupID);
+				
+				addUserStatement.executeUpdate();
+				
+				success = true;
+		}
+			    catch(Exception e){
+			    	e.printStackTrace();
+			    }		
+			
+				return success;
+		}	
+		
+		public boolean addUser( User user){
+			return this.addUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getGroupID());
+
 		}
 		
 		public User getUser(String email){
@@ -98,6 +127,24 @@ public class DBHelper {
 
 			return user; 
 		
+		}
+
+
+		public boolean delUser(int userID){
+
+			boolean queryResult = false;
+			try {
+				delUserByIDStatement.setInt(1, userID);
+				
+				queryResult = delUserByIDStatement.execute();
+			}
+			catch(Exception e){
+			System.out.println("Deletting User by ID \n"+
+						e.getClass().getName()+": "+e.getMessage());
+
+			}		
+			
+		return queryResult;	
 		}
 
 		
@@ -193,34 +240,34 @@ public class DBHelper {
 			return roles; 
 		
 		}
+
 		
 		/**
-		 * Returns a user with details assigned if authentication is successful
-		 * @param userName the username, userPassword the password
-		 * @return User object
-		 */
-		public User authenticateUser(String userName, String userPassword){
-			User user = new User();
-			ResultSet rs;
-			try {
-				getAuthenticatedUserStatement.setString(1, userName);
-				getAuthenticatedUserStatement.setString(2, userPassword);
-				rs = getAuthenticatedUserStatement.executeQuery();
+		     * Returns a user with details assigned if authentication is successful
+		     * @param userName the username, userPassword the password
+     * @return User object
+     */
+    public User authenticateUser(String userName, String userPassword){
+      User user = new User();
+      ResultSet rs;
+      try {
+        getAuthenticatedUserStatement.setString(1, userName);
+        getAuthenticatedUserStatement.setString(2, userPassword);
+        rs = getAuthenticatedUserStatement.executeQuery();
 
-				//if rs not empty, it means password matches a record
-				if (rs.next()) {
-					user.setEmail(rs.getString("email"));
-					user.setFirstName(rs.getString("lastName"));
-					user.setLastName(rs.getString("firstName"));
-				}
-				else
-					user.setEmail("User not found");
-			}
-			catch (Exception e){
-		    	System.out.println("Error in authenticating user from database " + e.getClass().getName() + ": " + e.getMessage());
-			}
-			return user;
-		}
-
+        //if rs not empty, it means password matches a record
+        if (rs.next()) {
+          user.setEmail(rs.getString("email"));
+          user.setFirstName(rs.getString("lastName"));
+          user.setLastName(rs.getString("firstName"));
+        }
+        else
+          user.setEmail("User not found");
+      }
+      catch (Exception e){
+          System.out.println("Error in authenticating user from database " + e.getClass().getName() + ": " + e.getMessage());
+      }
+      return user;
+    } 
 		
 	}
