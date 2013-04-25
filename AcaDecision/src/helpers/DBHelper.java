@@ -19,8 +19,8 @@ import admin.*;
  */
 public class DBHelper {
 
-	static String JDBC_URL = "jdbc:mysql://acadecision.db.5521910.hostedresource.com/acadecision";
-
+	static String JDBC_URL = "jdbc:mysql://97.74.31.15/acadecision";
+	PreparedStatement getAuthenticatedUserStatement; 
 	PreparedStatement getUserByEmailStatement;
 	PreparedStatement addUserStatement;
 	PreparedStatement delUserByIDStatement;
@@ -46,18 +46,19 @@ public class DBHelper {
 				Connection conn = DriverManager.getConnection(JDBC_URL, "acadecision", "D3c1d3@551");
 				System.out.println("Connected to Acadecision remote database");
 				
-				getUserByEmailStatement = conn.prepareStatement("select * from Users where email = ?"); // output: userID, firstName, lastName, email, password, groupID				
-				addUserStatement = conn.prepareStatement("insert into Users (firstName, lastName, email, password, Groups_groupID) values (?,?,?,?,?)");
-				delUserByIDStatement = conn.prepareStatement("delete from Users where userID = ?");
+				getAuthenticatedUserStatement = conn.prepareStatement("select * from acadecision.Users where email = (?) and password = (?) limit 0,1"); 
+				getUserByEmailStatement = conn.prepareStatement("select * from acadecision.Users where email = ?"); // output: userID, firstName, lastName, email, password, groupID				
+				addUserStatement = conn.prepareStatement("insert into acadecision.Users (firstName, lastName, email, password, Groups_groupID) values (?,?,?,?,?)");
+				delUserByIDStatement = conn.prepareStatement("delete from acadecision.Users where userID = ?");
 				
-				getGroupByNameStatement = conn.prepareStatement("select * from Groups where groupName = ?"); // output: groupID, groupName, groupDescription
-				addGroupStatement = conn.prepareStatement("insert into Groups (groupName, groupDescription) values (?,?)");
+				getGroupByNameStatement = conn.prepareStatement("select * from acadecision.Groups where groupName = ?"); // output: groupID, groupName, groupDescription
+				addGroupStatement = conn.prepareStatement("insert into acadecision.Groups (groupName, groupDescription) values (?,?)");
 
-				getRoleByIdStatement = conn.prepareStatement("select * from Roles where roleId = ?"); // output: roleID, roleName, roleDescription, method
-				addRoleStatement = conn.prepareStatement("insert into Roles (roleName, roleDescription, method) values (?,?,?)");
+				getRoleByIdStatement = conn.prepareStatement("select * from acadecision.Roles where roleId = ?"); // output: roleID, roleName, roleDescription, method
+				addRoleStatement = conn.prepareStatement("insert into acadecision.Roles (roleName, roleDescription, method) values (?,?,?)");
 				
-				getGroup_RoleStatement = conn.prepareStatement("select Roles_roleID from Group_Roles where groupID = ?");
-				addGroup_RoleStatement = conn.prepareStatement("insert into Group_Roles (groupID, roleID) values (?,?)");
+				getGroup_RoleStatement = conn.prepareStatement("select Roles_roleID from acadecision.Group_Roles where groupID = ?");
+				addGroup_RoleStatement = conn.prepareStatement("insert into acadecision.Group_Roles (groupID, roleID) values (?,?)");
 			
 				}
 			    catch(Exception e){
@@ -240,5 +241,33 @@ public class DBHelper {
 		
 		}
 
+		
+		/**
+		     * Returns a user with details assigned if authentication is successful
+		     * @param userName the username, userPassword the password
+     * @return User object
+     */
+    public User authenticateUser(String userName, String userPassword){
+      User user = new User();
+      ResultSet rs;
+      try {
+        getAuthenticatedUserStatement.setString(1, userName);
+        getAuthenticatedUserStatement.setString(2, userPassword);
+        rs = getAuthenticatedUserStatement.executeQuery();
+
+        //if rs not empty, it means password matches a record
+        if (rs.next()) {
+          user.setEmail(rs.getString("email"));
+          user.setFirstName(rs.getString("lastName"));
+          user.setLastName(rs.getString("firstName"));
+        }
+        else
+          user.setEmail("User not found");
+      }
+      catch (Exception e){
+          System.out.println("Error in authenticating user from database " + e.getClass().getName() + ": " + e.getMessage());
+      }
+      return user;
+    } 
 		
 	}
