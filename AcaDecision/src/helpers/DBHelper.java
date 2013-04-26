@@ -255,8 +255,8 @@ public class DBHelper {
 			// if rs not empty, it means password matches a record
 			if (rs.next()) {
 				user.setEmail(rs.getString("email"));
-				user.setFirstName(rs.getString("lastName"));
-				user.setLastName(rs.getString("firstName"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
 				user.setGroupID(rs.getInt("groupID"));
 			} else
 				user.setEmail("User not found");
