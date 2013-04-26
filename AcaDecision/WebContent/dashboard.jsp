@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/styles.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -69,7 +70,8 @@
 				var chart1Options = {
 					chart : {
 						type : 'bar',
-						renderTo : 'graph1'
+						renderTo : 'graph1',
+						height: 550
 					},
 				    title: {
 					          text: '${term } Enrollment - College of Engineering'
@@ -103,10 +105,11 @@
 
 				var chart2Options = {
 					chart : {
-						renderTo : 'graph2'
+						renderTo : 'graph2',
+						height: 300
 					},
 				    title: {
-				          text: '${term } Enrollment by Gender - College of Engineering'
+				          text: '${term } Enrollment by Gender'
 					},
 
 					series : [ {
@@ -116,6 +119,22 @@
 					} ]
 				};
 				
+				var chart3Options = {
+						chart : {
+							renderTo : 'graph3',
+							height: 300
+						},
+					    title: {
+					          text: '${term } Enrollment by Gender'
+						},
+
+						series : [ {
+							type: 'pie',
+							name : 'Students',
+							data : genderData,
+						} ]
+					};
+				
 				//display chart 1
 				chart1Options = jQuery.extend(true, {}, options, chart1Options);
 				var chart1 = new Highcharts.Chart(chart1Options);
@@ -123,6 +142,10 @@
 				//display chart 2
 				chart2Options = jQuery.extend(true, {}, options, chart2Options);
 				var chart2 = new Highcharts.Chart(chart2Options);
+				
+				//display chart 3
+				chart3Options = jQuery.extend(true, {}, options, chart3Options);
+				var chart3 = new Highcharts.Chart(chart3Options);
 			});
 		</script>
 	</c:when>
@@ -135,7 +158,6 @@
 			<div id="header_text">
 				<h1>AcaDecision</h1>
 			</div>
-
 			<div id="main_menu">
 				<ul id="menu">
 					<li><a href="index.jsp">Home</a></li>
@@ -148,10 +170,18 @@
 			<%@ include file="sidebar.jsp" %>
 		</div>
 		<div id="main">
-			<h2>Dashboard Page</h2>
+			<h3>Dashboard Page</h3>
 			<%-- Check if user is logged in --%>
 			<c:choose>
 				<c:when test="${!empty sessionScope.userName}">
+				<p>
+				<small>The charts on this page render live data from the operational data store. The AcaDecision team developed a simple web service
+				that connects to the database and outputs the data in JSON format. This is then rendered into HTML5 charts using the
+				HighCharts JS library (http://www.highcharts.com/).</small>
+				</p>
+				<p>
+				<small>To start, please select a Fall Term from the drop-down below, and click <em>View Data</em>.</small>
+				</p>
 				<form method="post" action="Controller">
 					<SELECT NAME="term_code">
 						<OPTION VALUE="">Choose Term
@@ -162,10 +192,9 @@
 						<OPTION VALUE="2008%20Fall">Fall 2008
 					</SELECT> <input type="submit" value="View Data">
 				</form>
-				<div id="graph1"
-					style="min-width: 400px; height: 550px; margin: 0 auto"></div>
-				<div id="graph2"
-					style="min-width: 400px; height: 550px; margin: 0 auto"></div>
+				<div id="graph1" style="min-width: 400px; margin: 0 auto"></div>
+				<div id="graph2" style="min-width: 350px; margin: 0 auto; float:left; border: 0px solid black"></div>
+				<div id="graph3" style="min-width: 350px; margin: 0 auto; float:right; border: 0px solid black"></div>
 				</c:when>
 				<c:otherwise>
 					<p>Please login to view the dashboard page.</p>

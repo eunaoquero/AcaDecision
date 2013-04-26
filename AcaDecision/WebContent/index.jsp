@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/styles.css" />
 <title>AcaDecision :: Home</title>
 </head>
@@ -35,20 +36,22 @@
 			<%@ include file="sidebar.jsp" %>
 		</div>
 		<div id="main">
-			<h2>About AcaDecision</h2>
+			<h3>About AcaDecision</h3>
 			<p>AcaDecision is a visualization tool created to help facilitate
 				the decision making of college administrators and department heads.
 				It allows for a quick and easy way to see the current status of a
 				college using different graphs and table summaries.</p>
 			<p>Data for the charts in this application are retrieved via a web service
 			connected to an external operational data store.</p>
-			<p>2013 Spring Project for MIST 7570</p>
-			<ul>
-				<li>Davis Buckheister</li>
-				<li>Brian Lord</li>
-				<li>Rafael Silva</li>
-				<li>Rodney Pacis</li>
-			</ul>
+			<p>
+			<u>Default user logins for this demo are:</u><br/>
+			<em>Administrator</em><br/>
+			Username: admin@acadecision.com<br/>
+			Password: admin<br/><br/>
+			<em>Super User</em><br/>
+			Username: charles@acadecision.com<br/>
+			Password: charles<br/>
+			</p>
 		</div>
 		<div id="footer">
 			<p>&copy; 2013 AcaDecision :: MIST 7530</p>

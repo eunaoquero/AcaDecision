@@ -21,6 +21,7 @@ public class DBHelper {
 
 	static String JDBC_URL = "jdbc:mysql://97.74.31.15/acadecision";
 	PreparedStatement getUserListStatement;
+	PreparedStatement getGroupListStatement;
 	PreparedStatement getAuthenticatedUserStatement;
 	PreparedStatement getUserByEmailStatement;
 	PreparedStatement addUserStatement;
@@ -46,10 +47,12 @@ public class DBHelper {
 					.prepareStatement("select * from acadecision.Users NATURAL JOIN acadecision.Groups where email = (?) and password = (?) limit 0,1");
 			getUserListStatement = conn
 					.prepareStatement("select * from acadecision.Users NATURAL JOIN acadecision.Groups order by lastName");
+			getGroupListStatement = conn
+					.prepareStatement("SELECT * FROM acadecision.Groups");
 			getUserByEmailStatement = conn
 					.prepareStatement("select * from acadecision.Users where email = ?"); // output: userID,firstName,lastName,email,password,groupID
 			addUserStatement = conn
-					.prepareStatement("insert into acadecision.Users (firstName, lastName, email, password, Groups_groupID) values (?,?,?,?,?)");
+					.prepareStatement("insert into acadecision.Users (firstName, lastName, email, password, groupID) values (?,?,?,?,?)");
 			delUserByIDStatement = conn
 					.prepareStatement("delete from acadecision.Users where userID = ?");
 			getGroupByNameStatement = conn
@@ -74,7 +77,7 @@ public class DBHelper {
 	}
 
 	// addUserStatement =
-	// conn.prepareStatement("insert into Users (firstName, lastName, email, password, Groups_groupID) values (?,?,?,?,?)");
+	// conn.prepareStatement("insert into Users (firstName, lastName, email, password, groupID) values (?,?,?,?,?)");
 	public boolean addUser(String firstName, String lastName, String email,
 			String password, int groupID) {
 
@@ -86,9 +89,7 @@ public class DBHelper {
 			addUserStatement.setString(3, email);
 			addUserStatement.setString(4, password);
 			addUserStatement.setInt(5, groupID);
-
 			addUserStatement.executeUpdate();
-
 			success = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,10 +105,8 @@ public class DBHelper {
 	}
 
 	public User getUser(String email) {
-
 		User user = null;
 		ResultSet queryResult;
-
 		try {
 			getUserByEmailStatement.setString(1, email);
 
@@ -128,14 +127,11 @@ public class DBHelper {
 						groupID);
 			}
 		}
-
 		catch (Exception e) {
 			System.out.println("Getting User by Name\n"
 					+ e.getClass().getName() + ": " + e.getMessage());
 		}
-
 		return user;
-
 	}
 
 	public boolean delUser(int userID) {
@@ -155,16 +151,12 @@ public class DBHelper {
 	}
 
 	public UserGroup getGroup(String groupName) {
-
 		UserGroup group = null;
 		ResultSet queryResult;
 		int groupID = -1;
-
 		try {
 			getGroupByNameStatement.setString(1, groupName);
-
 			queryResult = getGroupByNameStatement.executeQuery();
-
 			while (queryResult.next()) {
 				groupID = queryResult.getInt("groupID");
 				String groupDescription = queryResult
@@ -173,22 +165,17 @@ public class DBHelper {
 				group = new UserGroup(groupID, groupName, groupDescription);
 			}
 		}
-
 		catch (Exception e) {
 			System.out.println("Getting Group by Name\n"
 					+ e.getClass().getName() + ": " + e.getMessage());
 		}
-
 		group.addRoleList(getRolesByGroup(groupID));
 		return group;
-
 	}
 
 	public GroupRole getRole(int roleID) {
-
 		GroupRole role = null;
 		ResultSet queryResult;
-
 		try {
 			getRoleByIdStatement.setInt(1, roleID);
 
@@ -204,18 +191,14 @@ public class DBHelper {
 				role = new GroupRole(roleID, roleName, roleDescription, method);
 			}
 		}
-
 		catch (Exception e) {
 			System.out.println("Getting Item by ID\n" + e.getClass().getName()
 					+ ": " + e.getMessage());
 		}
-
 		return role;
-
 	}
 
 	public ArrayList<GroupRole> getRolesByGroup(int groupID) {
-
 		ArrayList<GroupRole> roles = new ArrayList<GroupRole>();
 		ResultSet queryResult;
 		GroupRole roleTmp = null;
@@ -295,6 +278,32 @@ public class DBHelper {
 					+ e.getClass().getName() + ": " + e.getMessage());
 		}
 		return userList;
+	}
+	
+	/**
+	 * Returns the group list
+	 * @return ArrayList of UserGroup objects
+	 */
+	public ArrayList<UserGroup> getGroupList() {
+		ArrayList<UserGroup> groupList = new ArrayList<UserGroup>();
+		ResultSet rs;
+		try {
+			rs = getGroupListStatement.executeQuery();
+
+			// Loop through results and add to arraylist
+			while (rs.next()) {
+				UserGroup group = new UserGroup();
+				group.setGroupID(rs.getInt("groupID"));
+				group.setGroupName(rs.getString("groupName"));
+				group.setGroupDescription(rs.getString("groupDescription"));
+				groupList.add(group);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Error getting group list "
+					+ e.getClass().getName() + ": " + e.getMessage());
+		}
+		return groupList;
 	}
 
 }

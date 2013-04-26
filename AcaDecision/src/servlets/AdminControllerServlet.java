@@ -87,10 +87,33 @@ public class AdminControllerServlet extends HttpServlet{
 				System.out.println("User not found!\n");
 				request.setAttribute("userNotFound", "Yes");
 			}
+		} else if (method.equals("addUser")) {
+			System.out.println("Adding User!\n");
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			String firstName = request.getParameter("firstName");
+			String lastName = request.getParameter("lastName");
+			int groupID = Integer.parseInt(request.getParameter("groupID"));
+			
+			if (email != "" && password != "" && firstName != "" && lastName != "") {
+				
+				DBHelper dbHelper = new DBHelper();
+				User user = new User();
+				user.setEmail(email);
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setPassword(password);
+				user.setGroupID(groupID);
+				//Add user to db
+				dbHelper.addUser(user);
+				
+			} else {
+				request.setAttribute("addUserError", "Yes");
+			}
+			
 		}
 		
 		dispatcher.forward(request, response);
-		
 	}
 
 }

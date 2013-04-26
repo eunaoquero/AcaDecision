@@ -25,6 +25,7 @@ body {
 }
 
 #container {
+	font-family: 'Noto Sans', sans-serif;
 	width: 1024px;
 	padding: 5px;
 	overflow: hidden;
@@ -36,7 +37,7 @@ body {
 	background: #E8E8E8;
 	width: 24%;
 	padding: 10px 5px;
-	min-height: 600px;
+	min-height: 450px;
 }
 
 #main {

@@ -18,6 +18,6 @@
 		</form>
 	</c:when>
 	<c:otherwise>
-		<p><small>Hello, ${sessionScope.firstName} ${sessionScope.lastName}!<br/><a href="Admin?method=logout&referrer=${pageContext.request.servletPath}">Logout</a></small></p>
+		<p>Hello, ${sessionScope.firstName} ${sessionScope.lastName}!<br/><a href="Admin?method=logout&referrer=${pageContext.request.servletPath}">Logout</a></p>
 	</c:otherwise>
 </c:choose>

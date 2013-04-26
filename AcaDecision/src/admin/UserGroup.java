@@ -32,6 +32,10 @@ public class UserGroup {
 		this.roles = new ArrayList<GroupRole>();
 	}
 
+	//No parameter constructor
+	public UserGroup(){
+		
+	}
 
 	/**
 	 * @return the groupID
