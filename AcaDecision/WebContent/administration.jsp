@@ -14,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/styles.css" />
-<title>AcaDecision :: Dashboards</title>
+<title>AcaDecision :: Administration</title>
 </head>
 <body>
 
@@ -26,9 +26,9 @@
 
 			<div id="main_menu">
 				<ul id="menu">
-					<li><a href="index.jsp">Home</a></li>
+					<li><a href="/Dual_Project/">Home</a></li>
 					<li><a href="dashboard.jsp">Dashboards</a></li>
-					<li><a href="administration.jsp">Admin</a></li>
+					<li><a href="/Dual_Project/Admin">Admin</a></li>
 				</ul>
 			</div>
 		</div>
@@ -42,11 +42,10 @@
 				<c:when test="${!empty sessionScope.userName}">
 					<c:choose>
 						<c:when test="${sessionScope.groupID == 1}">
-							<jsp:useBean class="helpers.DBHelper" id="dbHelper"/>
 							<p>
 							<small><em>Admins</em> have access to all pages, <em>SuperUsers</em> have access to just the Dashboard page.</small>
 							</p>
-							<table border="1" width="80%" cellpadding="3" cellspacing="2">
+							<table border="1" width="80%" cellpadding="2" cellspacing="2">
 								<tr>
 								<td colspan="4" bgcolor="#C9C7BA"><strong><em>User List</em></strong></td>
 								</tr>
@@ -57,7 +56,7 @@
 									<td width="20%" bgcolor="#CACACA"><strong>Group</strong></td>
 								</tr>
 								<%-- Loop through the user list --%>
-								<c:forEach items="${dbHelper.userList }" var="user">
+								<c:forEach items="${userList}" var="user">
 									<tr>
 										<td>${user.lastName}</td>
 										<td>${user.firstName}</td>
@@ -83,7 +82,7 @@
 									<tr><td>Group: </td><td>
 									<select name="groupID">
 										<%-- Loop through all groups and use as options of the select --%>
-										<c:forEach items="${dbHelper.groupList }" var="group">
+										<c:forEach items="${groupList }" var="group">
 											<option value="${group.groupID}">${group.groupName}</option>
 										</c:forEach>
 									</select>

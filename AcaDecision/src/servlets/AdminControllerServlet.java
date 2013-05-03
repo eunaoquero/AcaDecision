@@ -44,15 +44,41 @@ public class AdminControllerServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		ServletContext ctx = this.getServletContext();
-		RequestDispatcher dispatcher = ctx.getRequestDispatcher(request.getParameter("referrer"));
-		String method = request.getParameter("method");
-
+		String referrer;
+		String method;
+		String groupId;
+		
+		//Check referrer
+		if (request.getParameter("referrer") != null)
+			referrer = request.getParameter("referrer");
+		else
+			referrer = "/administration.jsp";
+		
+		//Check method
+		if (request.getParameter("method") != null)
+			method = request.getParameter("method");
+		else
+			method = "";
+		
+		//Check groupId
+		if (session.getAttribute("groupID") != null)
+			groupId = session.getAttribute("groupID").toString();
+		else 
+			groupId = "";
+		 
 		// Check method if logout
 		if (method.equals("logout")) {
 			System.out.println("User logging out!\n");
 			session.invalidate();
 		}
+		else {
+			//Check if user is logged in as administrator, if yes get userList
+			if (groupId.equals("1")) {
+				setUserList(request, response);
+			}
+		}
 		
+		RequestDispatcher dispatcher = ctx.getRequestDispatcher(referrer);
 		dispatcher.forward(request, response);
 	}
 
@@ -62,7 +88,15 @@ public class AdminControllerServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		ServletContext ctx = this.getServletContext();
-		RequestDispatcher dispatcher = ctx.getRequestDispatcher(request.getParameter("referrer"));
+		String referrer;
+		
+		//Check referrer
+		if (request.getParameter("referrer") != null)
+			referrer = request.getParameter("referrer");
+		else
+			referrer = "/administration.jsp";
+		
+		RequestDispatcher dispatcher = ctx.getRequestDispatcher(referrer);
 		String method = request.getParameter("method");
 		
 		//Check method if login
@@ -82,13 +116,13 @@ public class AdminControllerServlet extends HttpServlet{
 				session.setAttribute("firstName", user.getFirstName());
 				session.setAttribute("lastName", user.getLastName());
 				session.setAttribute("groupID", user.getGroupID());
+				setUserList(request, response);
 			}
 			else {
 				System.out.println("User not found!\n");
 				request.setAttribute("userNotFound", "Yes");
 			}
 		} else if (method.equals("addUser")) {
-			System.out.println("Adding User!\n");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String firstName = request.getParameter("firstName");
@@ -105,15 +139,27 @@ public class AdminControllerServlet extends HttpServlet{
 				user.setPassword(password);
 				user.setGroupID(groupID);
 				//Add user to db
+				System.out.println("Adding User!\n");
 				dbHelper.addUser(user);
-				
+				setUserList(request, response);
 			} else {
 				request.setAttribute("addUserError", "Yes");
+				setUserList(request, response);
 			}
 			
 		}
 		
 		dispatcher.forward(request, response);
+	}
+	
+	/**
+	 * Gets the user and group list and puts them in the request attribute
+	 */
+	protected void setUserList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		DBHelper dbHelper = new DBHelper();
+		System.out.println("Getting user and group list!\n");
+		request.setAttribute("userList", dbHelper.getUserList());
+		request.setAttribute("groupList", dbHelper.getGroupList());
 	}
 
 }

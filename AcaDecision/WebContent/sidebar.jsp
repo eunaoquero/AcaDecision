@@ -15,6 +15,11 @@
 				<input type="hidden" name="method" value="login">
 				<input type="submit" value="Login">
 			</p>
+			<c:choose>
+				<c:when test="${userNotFound == 'Yes'}">
+					<p><span style="font-weight:bold; color: red;"><em>You have entered an incorrect username and login!</em></span></p>
+				</c:when>
+			</c:choose>
 		</form>
 	</c:when>
 	<c:otherwise>
