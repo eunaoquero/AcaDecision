@@ -26,9 +26,9 @@
 
 			<div id="main_menu">
 				<ul id="menu">
-					<li><a href="/Dual_Project/">Home</a></li>
+					<li><a href="/">Home</a></li>
 					<li><a href="dashboard.jsp">Dashboards</a></li>
-					<li><a href="/Dual_Project/Admin">Admin</a></li>
+					<li><a href="/Admin">Admin</a></li>
 				</ul>
 			</div>
 		</div>
