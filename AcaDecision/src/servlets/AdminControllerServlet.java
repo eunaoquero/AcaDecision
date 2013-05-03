@@ -116,7 +116,6 @@ public class AdminControllerServlet extends HttpServlet{
 				session.setAttribute("firstName", user.getFirstName());
 				session.setAttribute("lastName", user.getLastName());
 				session.setAttribute("groupID", user.getGroupID());
-				setUserList(request, response);
 			}
 			else {
 				System.out.println("User not found!\n");
@@ -141,14 +140,13 @@ public class AdminControllerServlet extends HttpServlet{
 				//Add user to db
 				System.out.println("Adding User!\n");
 				dbHelper.addUser(user);
-				setUserList(request, response);
 			} else {
 				request.setAttribute("addUserError", "Yes");
-				setUserList(request, response);
 			}
 			
 		}
 		
+		setUserList(request, response);
 		dispatcher.forward(request, response);
 	}
 	
