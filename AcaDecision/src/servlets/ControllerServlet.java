@@ -42,7 +42,9 @@ public class ControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Implement doGet
+		ServletContext ctx = this.getServletContext();
+		RequestDispatcher dispatcher = ctx.getRequestDispatcher("/dashboard.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
