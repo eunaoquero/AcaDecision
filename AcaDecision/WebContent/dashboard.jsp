@@ -46,7 +46,26 @@
 							},
 							credits : {
 								enabled : false
-							}
+							},
+							 plotOptions: {
+					                pie: {
+					                    allowPointSelect: true,
+					                    cursor: 'pointer',
+					                    dataLabels: {
+					                        enabled: true,
+					                        borderWidth: 2,
+					                        borderColor: '#0F4A58',
+					                        backgroundColor: 'rgba(252, 255, 197, 0.7)',
+					                        padding: 5,
+					                        borderRadius: 5,
+					                        distance: -1,
+					                        color: '#C73C25',
+					                        formatter: function() {
+					                            return '<b>'+ this.point.name +'</b>: '+ Highcharts.numberFormat(this.point.y,0);
+					                        }
+					                    }
+					                }
+							 }
 						});
 
 				// default options
@@ -55,6 +74,7 @@
 				var jsonData = ${enrollmentData};
 				var data = [];
 				var genderData = [];
+				var gradData = [];
 
 				//parse the JSON data for chart 1
 				var categories = _.pluck(jsonData, 'MAJOR_DESC');
@@ -74,7 +94,7 @@
 						height: 550
 					},
 				    title: {
-					          text: '${term } Enrollment - College of Engineering'
+					          text: '${term } Enrollment By Major - College of Engineering'
 					},
 					xAxis : {
 						categories : categories,
@@ -97,7 +117,6 @@
 				//parse the JSON data for chart 2
 				jsonData = ${enrollmentGenderData};
 				for ( var i = 0, jsonDataLength = jsonData.length; i < jsonDataLength; i++) {
-					var enrollment = jsonData[i];
 					genderData.push(
 							[ jsonData[i]['GENDER'], parseInt(jsonData[i]['STUDENTS']) ]
 					);
@@ -106,7 +125,7 @@
 				var chart2Options = {
 					chart : {
 						renderTo : 'graph2',
-						height: 300
+						height: 250
 					},
 				    title: {
 				          text: '${term } Enrollment by Gender'
@@ -115,23 +134,34 @@
 					series : [ {
 						type: 'pie',
 						name : 'Students',
+						size:'100%',
 						data : genderData,
 					} ]
 				};
 				
+				//parse the JSON data for chart 3
+				jsonData = ${enrollmentGradData};
+				for ( var i = 0, jsonDataLength = jsonData.length; i < jsonDataLength; i++) {
+					gradData.push(
+							[ jsonData[i]['DEGREE_LEVEL'], parseInt(jsonData[i]['STUDENTS']) ]
+					);
+				}
+				
+				//chart options for chart 3
 				var chart3Options = {
 						chart : {
 							renderTo : 'graph3',
-							height: 300
+							height: 250
 						},
 					    title: {
-					          text: '${term } Enrollment by Gender'
+					          text: '${term } Enrollment by Degree Level'
 						},
 
 						series : [ {
 							type: 'pie',
-							name : 'Students',
-							data : genderData,
+							name : 'Degree Level',
+							size:'100%',
+							data : gradData,
 						} ]
 					};
 				

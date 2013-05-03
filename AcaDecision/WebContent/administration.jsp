@@ -45,27 +45,7 @@
 							<p>
 							<small><em>Admins</em> have access to all pages, <em>SuperUsers</em> have access to just the Dashboard page.</small>
 							</p>
-							<table border="1" width="80%" cellpadding="2" cellspacing="2">
-								<tr>
-								<td colspan="4" bgcolor="#C9C7BA"><strong><em>User List</em></strong></td>
-								</tr>
-								<tr>
-									<td width="20%" bgcolor="#CACACA"><strong>Last Name</strong></td>
-									<td width="20%" bgcolor="#CACACA"><strong>First Name</strong></td>
-									<td width="40%" bgcolor="#CACACA"><strong>Username/Email</strong></td>
-									<td width="20%" bgcolor="#CACACA"><strong>Group</strong></td>
-								</tr>
-								<%-- Loop through the user list --%>
-								<c:forEach items="${userList}" var="user">
-									<tr>
-										<td>${user.lastName}</td>
-										<td>${user.firstName}</td>
-										<td>${user.email}</td>
-										<td>${user.groupName}</td>
-									</tr>
-								</c:forEach>
-							</table><br/>
-							<form method="post" action="Admin">
+														<form method="post" action="Admin">
 								<table cellspacing="3" cellpadding="3">
 									<tr><td bgcolor="#C9C7BA" colspan="2"><em>Register User (all fields required)</em></td></tr>
 									<c:choose>
@@ -90,7 +70,27 @@
 									<tr><td colspan="2"><input type="submit" value="Register"></td></tr>
 								</table>
 								<input type="hidden" name="method" value="addUser"><input type="hidden" name="referrer" value="/administration.jsp">
-							</form>
+							</form><br/>
+							<table border="1" width="80%" cellpadding="2" cellspacing="2">
+								<tr>
+								<td colspan="4" bgcolor="#C9C7BA"><strong><em>User List</em></strong></td>
+								</tr>
+								<tr>
+									<td width="20%" bgcolor="#CACACA"><strong>Last Name</strong></td>
+									<td width="20%" bgcolor="#CACACA"><strong>First Name</strong></td>
+									<td width="40%" bgcolor="#CACACA"><strong>Username/Email</strong></td>
+									<td width="20%" bgcolor="#CACACA"><strong>Group</strong></td>
+								</tr>
+								<%-- Loop through the user list --%>
+								<c:forEach items="${userList}" var="user">
+									<tr>
+										<td>${user.lastName}</td>
+										<td>${user.firstName}</td>
+										<td>${user.email}</td>
+										<td>${user.groupName}</td>
+									</tr>
+								</c:forEach>
+							</table><br/>
 						</c:when>
 						<c:otherwise>
 							<p>You do not have the privileges to view this page.</p>

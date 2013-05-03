@@ -59,7 +59,7 @@ public class ControllerServlet extends HttpServlet {
 		ArrayList<DisplayGraph> graphList = new ArrayList<DisplayGraph>();
 		WebServiceHelper wb = new WebServiceHelper();
 		
-		//TODO: Make routine this better
+		//TODO: Make this routine better
 		//TODO: Use associative arrays for URL parameters
 		//Create graph 1
 		DisplayGraph graph = new DisplayGraph();
@@ -73,12 +73,21 @@ public class ControllerServlet extends HttpServlet {
 		genderGraph.setUrl(url);
 		graphList.add(genderGraph);
 		
+		//Create graph 3
+		DisplayGraph gradGraph = new DisplayGraph();
+		url = new URL("http://service.irp.gatech.edu/api/engg/index.php?term_code=" + termCode + "&method=LEVEL");
+		gradGraph.setUrl(url);
+		graphList.add(gradGraph);
+		
+		//Put the JSON data in an attribute
 		jsonData = wb.getWebServiceData(graphList.get(0).getUrl());
-		//Put the JSON data in an attribute
 		request.setAttribute("enrollmentData", jsonData);
-		jsonData = wb.getWebServiceData(graphList.get(1).getUrl());
 		//Put the JSON data in an attribute
+		jsonData = wb.getWebServiceData(graphList.get(1).getUrl());
 		request.setAttribute("enrollmentGenderData", jsonData);
+		//Put the JSON data in an attribute
+		jsonData = wb.getWebServiceData(graphList.get(2).getUrl());
+		request.setAttribute("enrollmentGradData", jsonData);
 		
 		request.setAttribute("term", term);
 		dispatcher.forward(request, response);
