@@ -25,7 +25,7 @@ public class DBHelper {
 	PreparedStatement getAuthenticatedUserStatement;
 	PreparedStatement getUserByEmailStatement;
 	PreparedStatement addUserStatement;
-	PreparedStatement delUserByIDStatement;
+	PreparedStatement delUserByEmailStatement;
 	PreparedStatement getGroupByNameStatement;
 	PreparedStatement addGroupStatement;
 	PreparedStatement getRoleByIdStatement;
@@ -53,8 +53,8 @@ public class DBHelper {
 					.prepareStatement("select * from acadecision.Users where email = ?"); // output: userID,firstName,lastName,email,password,groupID
 			addUserStatement = conn
 					.prepareStatement("insert into acadecision.Users (firstName, lastName, email, password, groupID) values (?,?,?,?,?)");
-			delUserByIDStatement = conn
-					.prepareStatement("delete from acadecision.Users where userID = ?");
+			delUserByEmailStatement = conn
+					.prepareStatement("delete from acadecision.Users where email = ?");
 			getGroupByNameStatement = conn
 					.prepareStatement("select * from acadecision.Groups where groupName = ?"); // output:groupID,groupName,groupDescription 
 			addGroupStatement = conn
@@ -134,15 +134,15 @@ public class DBHelper {
 		return user;
 	}
 
-	public boolean delUser(int userID) {
+	public boolean delUser(String email) {
 
 		boolean queryResult = false;
 		try {
-			delUserByIDStatement.setInt(1, userID);
+			delUserByEmailStatement.setString(1, email);
 
-			queryResult = delUserByIDStatement.execute();
+			queryResult = delUserByEmailStatement.execute();
 		} catch (Exception e) {
-			System.out.println("Deletting User by ID \n"
+			System.out.println("Deletting User using email \n"
 					+ e.getClass().getName() + ": " + e.getMessage());
 
 		}

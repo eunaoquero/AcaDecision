@@ -144,6 +144,12 @@ public class AdminControllerServlet extends HttpServlet{
 				request.setAttribute("addUserError", "Yes");
 			}
 			
+		}else if (method.equals("delUser")) {
+			String email = request.getParameter("delEmail");
+
+			DBHelper dbHelper = new DBHelper();
+			dbHelper.delUser(email);
+			
 		}
 		
 		setUserList(request, response);

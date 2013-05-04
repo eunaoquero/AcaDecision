@@ -71,15 +71,18 @@
 								</table>
 								<input type="hidden" name="method" value="addUser"><input type="hidden" name="referrer" value="/administration.jsp">
 							</form><br/>
+							
+						<form method="post" action="Admin">							
 							<table border="1" width="80%" cellpadding="2" cellspacing="2">
 								<tr>
-								<td colspan="4" bgcolor="#C9C7BA"><strong><em>User List</em></strong></td>
+								<td colspan="5" bgcolor="#C9C7BA"><strong><em>User List</em></strong></td>
 								</tr>
 								<tr>
 									<td width="20%" bgcolor="#CACACA"><strong>Last Name</strong></td>
 									<td width="20%" bgcolor="#CACACA"><strong>First Name</strong></td>
 									<td width="40%" bgcolor="#CACACA"><strong>Username/Email</strong></td>
 									<td width="20%" bgcolor="#CACACA"><strong>Group</strong></td>
+									<td width="10%" bgcolor="#CACACA"><strong>Delete?</strong></td>
 								</tr>
 								<%-- Loop through the user list --%>
 								<c:forEach items="${userList}" var="user">
@@ -88,9 +91,17 @@
 										<td>${user.firstName}</td>
 										<td>${user.email}</td>
 										<td>${user.groupName}</td>
+										<td style="text-align: center"><input type="radio" name="delEmail" value="${user.email}"></td>										
 									</tr>
 								</c:forEach>
-							</table><br/>
+								<tr>
+								<td colspan="5" align="right" ><input type="submit" value="Delete"></td>
+								</tr>
+							</table>						
+								<input type="hidden" name="method" value="delUser">
+								<input type="hidden" name="referrer" value="/administration.jsp">
+
+							</form><br/>
 						</c:when>
 						<c:otherwise>
 							<p>You do not have the privileges to view this page.</p>
