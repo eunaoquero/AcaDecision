@@ -12,32 +12,36 @@ import java.net.URL;
  *
  */
 public class DisplayGraph {
+
 	
-	//TODO: Redevelop the DisplayGraph class to be more modular
-	
+
+
 	public String termCode;
 	public URL url;
 	public String graphTitle;
-	public String dataMethod;
+
+	/**
+	 * Default Constructor 
+	 * (all initial arguments required)
+	 * 
+	 * @param termCode Term's Code
+	 * @param url Graph's URL
+	 * @param graphTitle Graph's Title
+	 */
+	public DisplayGraph(String termCode, URL url, String graphTitle) {
+		this.termCode = termCode;
+		this.url = url;
+		this.graphTitle = graphTitle;
+	}
 	
-	//No parameter constructor
 	public DisplayGraph() {
+
+		termCode = "";
+		url = null;
+		graphTitle = "";
 		
 	}
 	
-	/**
-	 * @return the dataMethod
-	 */
-	public String getDataMethod() {
-		return dataMethod;
-	}
-
-	/**
-	 * @param dataMethod the dataMethod to set
-	 */
-	public void setDataMethod(String dataMethod) {
-		this.dataMethod = dataMethod;
-	}
 
 	/**
 	 * @return the termCode

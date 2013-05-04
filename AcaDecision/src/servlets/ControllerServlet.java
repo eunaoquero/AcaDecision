@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import data.DisplayDashboard;
 import data.DisplayGraph;
 
 /**
@@ -56,9 +57,11 @@ public class ControllerServlet extends HttpServlet {
 		RequestDispatcher dispatcher = ctx.getRequestDispatcher("/dashboard.jsp");
 		String termCode = request.getParameter("term_code");
 		String term = URLDecoder.decode(termCode, "UTF-8");
-		
-		//List of graph objects
+
 		ArrayList<DisplayGraph> graphList = new ArrayList<DisplayGraph>();
+		//Create Enrollment Dashboard
+		DisplayDashboard EnrollDash = new DisplayDashboard(0,"Enrollment Dashboard", "Shows Graphs for: Major, Gender and Degree Level", graphList) ;  
+		
 		WebServiceHelper wb = new WebServiceHelper();
 		
 		//TODO: Make this routine better
@@ -67,28 +70,28 @@ public class ControllerServlet extends HttpServlet {
 		DisplayGraph graph = new DisplayGraph();
 		URL url = new URL("http://service.irp.gatech.edu/api/engg/index.php?term_code=" + termCode + "&method=ALL");
 		graph.setUrl(url);
-		graphList.add(graph);
+		EnrollDash.getGraphList().add(graph);
 		
 		//Create graph 2
 		DisplayGraph genderGraph = new DisplayGraph();
 		url = new URL("http://service.irp.gatech.edu/api/engg/index.php?term_code=" + termCode + "&method=GENDER");
 		genderGraph.setUrl(url);
-		graphList.add(genderGraph);
+		EnrollDash.getGraphList().add(genderGraph);
 		
 		//Create graph 3
 		DisplayGraph gradGraph = new DisplayGraph();
 		url = new URL("http://service.irp.gatech.edu/api/engg/index.php?term_code=" + termCode + "&method=LEVEL");
 		gradGraph.setUrl(url);
-		graphList.add(gradGraph);
+		EnrollDash.getGraphList().add(gradGraph);
 		
 		//Put the JSON data in an attribute
-		jsonData = wb.getWebServiceData(graphList.get(0).getUrl());
+		jsonData = wb.getWebServiceData(EnrollDash.getGraphList().get(0).getUrl());
 		request.setAttribute("enrollmentData", jsonData);
 		//Put the JSON data in an attribute
-		jsonData = wb.getWebServiceData(graphList.get(1).getUrl());
+		jsonData = wb.getWebServiceData(EnrollDash.getGraphList().get(1).getUrl());
 		request.setAttribute("enrollmentGenderData", jsonData);
 		//Put the JSON data in an attribute
-		jsonData = wb.getWebServiceData(graphList.get(2).getUrl());
+		jsonData = wb.getWebServiceData(EnrollDash.getGraphList().get(2).getUrl());
 		request.setAttribute("enrollmentGradData", jsonData);
 		
 		request.setAttribute("term", term);
