@@ -190,9 +190,9 @@
 			</div>
 			<div id="main_menu">
 				<ul id="menu">
-					<li><a href="/">Home</a></li>
-					<li><a href="/Controller">Dashboards</a></li>
-					<li><a href="/Admin">Admin</a></li>
+					<li><a href="index.jsp">Home</a></li>
+					<li><a href="Controller">Dashboards</a></li>
+					<li><a href="Admin">Admin</a></li>
 				</ul>
 			</div>
 		</div>
