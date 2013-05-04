@@ -19,10 +19,13 @@ public class GroupRole {
 	
 	
 	/**
-	 * @param roleID
-	 * @param roleName
-	 * @param roleDescription
-	 * @param method
+	 * Default Constructor 
+	 * (all initial arguments required)
+	 * 
+	 * @param roleID Role Identification Number
+	 * @param roleName Role's Name
+	 * @param roleDescription Role's Description
+	 * @param method Role's Method
 	 */
 	public GroupRole(int roleID, String roleName, String roleDescription,
 			String method) {
@@ -30,6 +33,13 @@ public class GroupRole {
 		this.roleName = roleName;
 		this.roleDescription = roleDescription;
 		this.method = method;
+	}
+	
+	/**
+	 * Test Non-Arguments Constructor
+	 */
+	public GroupRole(){
+			
 	}
 
 

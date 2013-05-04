@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 /**
- * Contains information about a User Group
+ * User Group Data Transfer Object Class
  * @author blord
  *
  */
@@ -21,9 +21,13 @@ public class UserGroup {
 	
 	
 	/**
-	 * @param groupID
-	 * @param groupName
-	 * @param groupDescription
+	 * Default Constructor 
+	 * (all initial arguments required)
+	 * 
+	 * @param groupID Group Identification Number
+	 * @param groupName Group's Name
+	 * @param groupDescription Group's Description
+	 * @param roles List of Group's Roles
 	 */
 	public UserGroup(int groupID, String groupName, String groupDescription) {
 		this.groupID = groupID;
@@ -32,7 +36,9 @@ public class UserGroup {
 		this.roles = new ArrayList<GroupRole>();
 	}
 
-	//No parameter constructor
+	/**
+	 * Test Non-Arguments Constructor
+	 */
 	public UserGroup(){
 		
 	}
@@ -84,12 +90,25 @@ public class UserGroup {
 		this.groupDescription = groupDescription;
 	}
 
+	/**
+	 * @return the Roles List
+	 */
+	public ArrayList<GroupRole> getRoles(){
+		return roles;
+	}
 	
-	
+	/**
+	 * Method to add a new Role within this Group Class
+	 * @param newRole
+	 */
 	public void addRole(GroupRole newRole){
 		roles.add(newRole);
 	}
 	
+	/**
+	 * Method to add List of Roles within this Group Class
+	 * @param rolesTmp
+	 */
 	public void addRoleList(ArrayList<GroupRole> rolesTmp){
 		this.roles = rolesTmp;
 	}
