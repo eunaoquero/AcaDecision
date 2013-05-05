@@ -65,7 +65,6 @@ public class ControllerServlet extends HttpServlet {
 		WebServiceHelper wb = new WebServiceHelper();
 		
 		//TODO: Make this routine better
-		//TODO: Use associative arrays for URL parameters
 		//Create graph 1
 		DisplayGraph graph = new DisplayGraph();
 		URL url = new URL("http://service.irp.gatech.edu/api/engg/index.php?term_code=" + termCode + "&method=ALL");
