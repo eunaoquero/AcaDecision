@@ -26,12 +26,7 @@ public class DBHelper {
 	PreparedStatement getUserByEmailStatement;
 	PreparedStatement addUserStatement;
 	PreparedStatement delUserByEmailStatement;
-	PreparedStatement getGroupByNameStatement;
-	PreparedStatement addGroupStatement;
-	PreparedStatement getRoleByIdStatement;
-	PreparedStatement addRoleStatement;
-	PreparedStatement getGroup_RoleStatement;
-	PreparedStatement addGroup_RoleStatement;
+
 
 	/**
 	 * Establish a connection to the database and create the PreparedStatements
@@ -50,23 +45,11 @@ public class DBHelper {
 			getGroupListStatement = conn
 					.prepareStatement("SELECT * FROM acadecision.Groups");
 			getUserByEmailStatement = conn
-					.prepareStatement("select * from acadecision.Users where email = ?"); // output: userID,firstName,lastName,email,password,groupID
+					.prepareStatement("select * from acadecision.Users where email = ?"); 
 			addUserStatement = conn
 					.prepareStatement("insert into acadecision.Users (firstName, lastName, email, password, groupID) values (?,?,?,?,?)");
 			delUserByEmailStatement = conn
 					.prepareStatement("delete from acadecision.Users where email = ?");
-			getGroupByNameStatement = conn
-					.prepareStatement("select * from acadecision.Groups where groupName = ?"); // output:groupID,groupName,groupDescription 
-			addGroupStatement = conn
-					.prepareStatement("insert into acadecision.Groups (groupName, groupDescription) values (?,?)");
-			getRoleByIdStatement = conn
-					.prepareStatement("select * from acadecision.Roles where roleId = ?"); // output:roleID,roleName,roleDescription, method
-			addRoleStatement = conn
-					.prepareStatement("insert into acadecision.Roles (roleName, roleDescription, method) values (?,?,?)");
-			getGroup_RoleStatement = conn
-					.prepareStatement("select Roles_roleID from acadecision.Group_Roles where groupID = ?");
-			addGroup_RoleStatement = conn
-					.prepareStatement("insert into acadecision.Group_Roles (groupID, roleID) values (?,?)");
 
 		} catch (Exception e) {
 			System.out.println("Error in constructor: "
@@ -76,8 +59,15 @@ public class DBHelper {
 
 	}
 
-	// addUserStatement =
-	// conn.prepareStatement("insert into Users (firstName, lastName, email, password, groupID) values (?,?,?,?,?)");
+	/**
+	 * Add User into Database receiving all Parameters 
+	 * @param firstName User's First Name
+	 * @param lastName User's Last Name
+	 * @param email User's Email
+	 * @param password User's Password
+	 * @param groupID Identification Number of User's Group
+	 * @return was the operation successful?
+	 */
 	public boolean addUser(String firstName, String lastName, String email,
 			String password, int groupID) {
 
@@ -98,12 +88,22 @@ public class DBHelper {
 		return success;
 	}
 
+		/**
+		 * Add User Object into Database 
+		 * @param user Object to be added within the Database
+		 * @return was the operation successful?
+		 */
 	public boolean addUser(User user) {
 		return this.addUser(user.getFirstName(), user.getLastName(),
 				user.getEmail(), user.getPassword(), user.getGroupID());
 
 	}
-
+	
+	/**
+	 * Retrieve User Object into Database
+	 * @param email
+	 * @return user Object form Database
+	 */
 	public User getUser(String email) {
 		User user = null;
 		ResultSet queryResult;
@@ -112,20 +112,17 @@ public class DBHelper {
 
 			queryResult = getUserByEmailStatement.executeQuery();
 
-			while (queryResult.next()) {
+			if (queryResult.next()) {
 
 				int userID = queryResult.getInt("userID");
-				;
 				String firstName = queryResult.getString("firstName");
-				;
 				String lastName = queryResult.getString("lastName");
-				String password = queryResult.getString("password");
-				;
+				String password = queryResult.getString("password");				
 				int groupID = queryResult.getInt("groupID");
 
 				user = new User(userID, firstName, lastName, email, password,
 						groupID);
-			}
+			} else user = null;
 		}
 		catch (Exception e) {
 			System.out.println("Getting User by Name\n"
@@ -134,93 +131,29 @@ public class DBHelper {
 		return user;
 	}
 
+	/**
+	 * Delete User from Database
+	 * @param email
+	 * @return
+	 */
 	public boolean delUser(String email) {
 
-		boolean queryResult = false;
+		boolean success = false;
+
 		try {
 			delUserByEmailStatement.setString(1, email);
+			delUserByEmailStatement.execute();
+			success = true;
 
-			queryResult = delUserByEmailStatement.execute();
 		} catch (Exception e) {
 			System.out.println("Deletting User using email \n"
 					+ e.getClass().getName() + ": " + e.getMessage());
 
 		}
 
-		return queryResult;
+		return success;
 	}
 
-	public UserGroup getGroup(String groupName) {
-		UserGroup group = null;
-		ResultSet queryResult;
-		int groupID = -1;
-		try {
-			getGroupByNameStatement.setString(1, groupName);
-			queryResult = getGroupByNameStatement.executeQuery();
-			while (queryResult.next()) {
-				groupID = queryResult.getInt("groupID");
-				String groupDescription = queryResult
-						.getString("groupDescription");
-
-				group = new UserGroup(groupID, groupName, groupDescription);
-			}
-		}
-		catch (Exception e) {
-			System.out.println("Getting Group by Name\n"
-					+ e.getClass().getName() + ": " + e.getMessage());
-		}
-		group.addRoleList(getRolesByGroup(groupID));
-		return group;
-	}
-
-	public GroupRole getRole(int roleID) {
-		GroupRole role = null;
-		ResultSet queryResult;
-		try {
-			getRoleByIdStatement.setInt(1, roleID);
-
-			queryResult = getRoleByIdStatement.executeQuery();
-
-			while (queryResult.next()) {
-
-				String roleName = queryResult.getString("roleName");
-				String roleDescription = queryResult
-						.getString("roleDescription");
-				String method = queryResult.getString("method");
-
-				role = new GroupRole(roleID, roleName, roleDescription, method);
-			}
-		}
-		catch (Exception e) {
-			System.out.println("Getting Item by ID\n" + e.getClass().getName()
-					+ ": " + e.getMessage());
-		}
-		return role;
-	}
-
-	public ArrayList<GroupRole> getRolesByGroup(int groupID) {
-		ArrayList<GroupRole> roles = new ArrayList<GroupRole>();
-		ResultSet queryResult;
-		GroupRole roleTmp = null;
-
-		try {
-			getGroup_RoleStatement.setInt(1, groupID);
-
-			queryResult = getGroup_RoleStatement.executeQuery();
-
-			while (queryResult.next()) {
-				int roleID = queryResult.getInt("Roles_roleID");
-				roleTmp = getRole(roleID);
-				roles.add(roleTmp);
-			}
-		}
-
-		catch (Exception e) {
-			System.out.println("Getting Item by ID\n" + e.getClass().getName()
-					+ ": " + e.getMessage());
-		}
-		return roles;
-	}
 
 	/**
 	 * Returns a user with details assigned if authentication is successful

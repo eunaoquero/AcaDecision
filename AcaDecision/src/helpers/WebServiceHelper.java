@@ -23,11 +23,13 @@ public class WebServiceHelper {
 		
 	}
 	
+	//Data Setter Method 
 	public String getWebServiceData(URL urlString) {
 		StringBuilder dataString = new StringBuilder();
 		String line;
 
 		try {
+			//Establish connection and fetch data
 			HttpURLConnection connection = (HttpURLConnection) urlString.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);

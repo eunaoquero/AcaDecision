@@ -147,8 +147,11 @@ public class AdminControllerServlet extends HttpServlet{
 		}else if (method.equals("delUser")) {
 			String email = request.getParameter("delEmail");
 
+			if(email != null)
+			/**Protect primary admin account*/
+			if( (!email.equals("admin@acadecision.com") && !email.equals("charles@acadecision.com") ) ){
 			DBHelper dbHelper = new DBHelper();
-			dbHelper.delUser(email);
+			dbHelper.delUser(email);}
 			
 		}
 		
